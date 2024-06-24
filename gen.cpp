@@ -6,6 +6,7 @@
 #include <random>
 #include <unordered_map>
 #include <vector>
+
 const int MSG_AMOUNT = 1e4;
 
 std::mt19937 rng(42239777);
