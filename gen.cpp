@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <vector>
 
-const int MSG_AMOUNT = 1e4;
+const int MSG_AMOUNT = 5e6;
 
 std::mt19937 rng(42239777);
 std::string alphabet;
@@ -59,7 +59,7 @@ int main(){
     }
     alphabet += ' ';
 
-    std::fstream fout("in.log");
+    std::ofstream fout("in.log");
 
     phone_numbers = {"+7911-123-45-67", "+7921-239-42-69", "567-89-10", "8(931)523-65-67", "+79541234567", "8921-123-45-69"};
     first_names = {"Иван", "Василий", "Константин", "Петр", "Алексей", "Дмитрий"};
