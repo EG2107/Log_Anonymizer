@@ -109,7 +109,6 @@ bool is_ip(std::string str){
 }
 
 bool is_russian(std::string str){
-    std::string rus = "аяАЯ";
     for (int i = 0; i < str.size(); ++i){
         if (!(((int)str[i]) == -88 || ((int)str[i]) == -72 || (-64 <= ((int)str[i]) && ((int)str[i]) <= -1))) {
             return false;
