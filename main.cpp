@@ -111,7 +111,7 @@ bool is_ip(std::string str){
 bool is_russian(std::string str){
     std::string rus = "аяАЯ";
     for (int i = 0; i < str.size(); ++i){
-        if (!(rus[0] <= str[i] && str[i] <= rus[1]) && !(rus[2] <= str[i] && str[i] <= rus[3])){
+        if (!(((int)str[i]) == -88 || ((int)str[i]) == -72 || (-64 <= ((int)str[i]) && ((int)str[i]) <= -1))) {
             return false;
         }
     }
@@ -153,7 +153,7 @@ int main(){
                 fout_logs << "ip" << mp_ips[ip] << " ";
             } else if (is_russian(word)){
                 if (!mp_names.count(word)){
-                    mp_names[word] = mp_ips.size();
+                    mp_names[word] = mp_names.size();
                 }
                 fout_logs << "name" << mp_names[word] << " ";
             } else {
