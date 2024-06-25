@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <vector>
 
-const int MSG_AMOUNT = 1e6;
+const int MSG_AMOUNT = 5e6;
 
 std::mt19937 rng(42239777);
 std::string alphabet;
