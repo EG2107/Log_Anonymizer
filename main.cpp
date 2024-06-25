@@ -16,9 +16,6 @@ struct UTF8Char {
         return (((int) a + 256) == 208) && ((((int) b + 256) >= 144 && ((int) b + 256) <= 191) || (((int) b + 256) == 129)) ||
             (((int) a + 256) == 209) && ((((int) b + 256) >= 128 && ((int) b + 256) <= 143) || (((int) b + 256) == 145));
     }
-    bool isCapital(){
-        return (((int) a + 256) == 208) && ((((int) b + 256) >= 144 && ((int) b + 256) <= 175) || (((int) b + 256) == 129));
-    }
 };
 
 void input_templates(){
