@@ -9,6 +9,18 @@
 
 std::vector<std::string> phone_number_templates;
 
+struct UTF8Char {
+    char a, b;
+    UTF8Char(char a, char b): a(a), b(b) {}
+    bool isRus(){
+        return (((int) a + 256) == 208) && ((((int) b + 256) >= 144 && ((int) b + 256) <= 191) || (((int) b + 256) == 129)) ||
+            (((int) a + 256) == 209) && ((((int) b + 256) >= 128 && ((int) b + 256) <= 143) || (((int) b + 256) == 145));
+    }
+    bool isCapital(){
+        return (((int) a + 256) == 208) && ((((int) b + 256) >= 144 && ((int) b + 256) <= 175) || (((int) b + 256) == 129));
+    }
+};
+
 void input_templates(){
     std::ifstream fin_templates("phone_number_templates.txt");
     std::string phone_template;
@@ -115,8 +127,8 @@ bool is_ip(std::string str){
 }
 
 bool is_russian(std::string str){
-    for (int i = 0; i < str.size(); ++i){
-        if (' ' <= str[i] && str[i] <= '~'){
+    for (int i = 0; i < str.size(); i += 2){
+        if (!UTF8Char(str[i], str[i + 1]).isRus()){
             return false;
         }
     }
