@@ -110,7 +110,7 @@ bool is_ip(std::string str){
 
 bool is_russian(std::string str){
     for (int i = 0; i < str.size(); ++i){
-        if (!(((int)str[i]) == -88 || ((int)str[i]) == -72 || (-64 <= ((int)str[i]) && ((int)str[i]) <= -1))) {
+        if (' ' <= str[i] && str[i] <= '~'){
             return false;
         }
     }
@@ -118,9 +118,6 @@ bool is_russian(std::string str){
 }
 
 int main(){
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(0);
-    std::cout.tie(0);
     setlocale(LC_ALL, "Russian");
 
     input_templates();
@@ -184,12 +181,16 @@ int main(){
     }
     fout_map << '\n';
 
-    fout_map << "Names:\n";
+    std::vector<std::pair<unsigned int, std::string>> names_map_to_sort;
     for (auto i : mp_names){
-        fout_map << i.first << " " << i.second << "\n";
+        names_map_to_sort.push_back(std::make_pair(i.second, i.first));
+    }
+    std::sort(names_map_to_sort.begin(), names_map_to_sort.end());
+    fout_map << "Names:\n";
+    for (auto i : names_map_to_sort){
+        fout_map << i.second << " " << i.first << "\n";
     }
     fout_map << '\n';
-
 
     return 0;
 }

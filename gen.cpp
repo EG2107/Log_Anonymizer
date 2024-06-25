@@ -7,18 +7,18 @@
 #include <unordered_map>
 #include <vector>
 
-const int MSG_AMOUNT = 5e6;
+const int MSG_AMOUNT = 1e6;
 
 std::mt19937 rng(42239777);
 std::string alphabet;
 std::vector<std::string> phone_numbers, surnames, first_names, last_names;
 
 std::string gen_message(){
-    std::uniform_int_distribution<int> dis(32, 126);
+    std::uniform_int_distribution<char> dis(' ', '~');
     std::string res = "";
     int len = rng() % 100 + 1;
     for (int i = 0; i < len; ++i){
-        res += char(dis(rng));
+        res += dis(rng);
     }
     return res;
 }
@@ -44,10 +44,6 @@ std::string gen_user_data(){
 }
 
 int main(){
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(0);
-    std::cout.tie(0);
-
     for (char c = 'a'; c <= 'z'; ++c){
         alphabet += c;
     }
