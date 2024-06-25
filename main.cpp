@@ -91,14 +91,20 @@ bool is_phone_number(std::string str){
 }
 
 bool is_ip(std::string str){
+    if (str.size() > 15){
+        return false;
+    }
+    std::string cur_block;
     int cnt_dots = 0, cnt_digits_in_block = 0;
     for (char c : str){
         if (c == '.'){
             cnt_dots++;
             cnt_digits_in_block = 0;
+            cur_block = "";
         } else if (is_digit(c)){
+            cur_block += c;
             cnt_digits_in_block++;
-            if (cnt_digits_in_block > 3){
+            if (cnt_digits_in_block > 3 || std::stoll(cur_block) >= 256){
                 return false;
             }
         } else {
@@ -127,8 +133,11 @@ int main(){
     std::ofstream fout_map("convert_map.txt");
 
     std::unordered_map<long long, unsigned int> mp_phones;
+    std::vector<long long> all_phones;
     std::unordered_map<unsigned int, unsigned int> mp_ips;
+    std::vector<unsigned int> all_ips;
     std::unordered_map<std::string, unsigned int> mp_names;
+    std::vector<std::string> all_names;
 
     std::string line;
     while (std::getline(fin_logs, line)){
@@ -139,17 +148,20 @@ int main(){
                 long long phone = phone_to_ll(word);
                 if (!mp_phones.count(phone)){
                     mp_phones[phone] = mp_phones.size();
+                    all_phones.push_back(phone);
                 }
                 fout_logs << "phone" << mp_phones[phone] << " ";
             } else if (is_ip(word)){
                 unsigned int ip = ip_to_ul(word);
                 if (!mp_ips.count(ip)){
                     mp_ips[ip] = mp_ips.size();
+                    all_ips.push_back(ip);
                 }
                 fout_logs << "ip" << mp_ips[ip] << " ";
             } else if (is_russian(word)){
                 if (!mp_names.count(word)){
                     mp_names[word] = mp_names.size();
+                    all_names.push_back(word);
                 }
                 fout_logs << "name" << mp_names[word] << " ";
             } else {
@@ -159,38 +171,23 @@ int main(){
         fout_logs << "\n";
     }
 
-    std::vector<std::pair<unsigned int, long long>> phone_numbers_to_sort;
-    for (auto i : mp_phones){
-        phone_numbers_to_sort.push_back(std::make_pair(i.second, i.first));
-    }
-    std::sort(phone_numbers_to_sort.begin(), phone_numbers_to_sort.end());
     fout_map << "Phone numbers:\n";
-    for (auto i : phone_numbers_to_sort){
-        fout_map << i.second << " " << i.first << "\n";
+    for (int i = 0; i < all_phones.size(); ++i){
+        fout_map << all_phones[i] << " " << i << "\n";
     }
-    fout_map << '\n';
+    fout_map << "\n";
 
-    std::vector<std::pair<unsigned int, unsigned int>> ip_map_to_sort;
-    for (auto i : mp_ips){
-        ip_map_to_sort.push_back(std::make_pair(i.second, i.first));
-    }
-    std::sort(ip_map_to_sort.begin(), ip_map_to_sort.end());
     fout_map << "IPs:\n";
-    for (auto i : ip_map_to_sort){
-        fout_map << ul_to_ip(i.second) << " " << i.first << "\n";
+    for (int i = 0; i < all_ips.size(); ++i){
+        fout_map << ul_to_ip(all_ips[i]) << " " << i << "\n";
     }
-    fout_map << '\n';
+    fout_map << "\n";
 
-    std::vector<std::pair<unsigned int, std::string>> names_map_to_sort;
-    for (auto i : mp_names){
-        names_map_to_sort.push_back(std::make_pair(i.second, i.first));
-    }
-    std::sort(names_map_to_sort.begin(), names_map_to_sort.end());
     fout_map << "Names:\n";
-    for (auto i : names_map_to_sort){
-        fout_map << i.second << " " << i.first << "\n";
+    for (int i = 0; i < all_names.size(); ++i){
+        fout_map << all_names[i] << " " << i << "\n";
     }
-    fout_map << '\n';
+    fout_map << "\n";
 
     return 0;
 }
