@@ -11,7 +11,9 @@ std::vector<std::string> phone_number_templates;
 
 struct UTF8Char {
     char a, b;
+
     UTF8Char(char a, char b): a(a), b(b) {}
+    
     bool isRus(){
         return (((int) a + 256) == 208) && ((((int) b + 256) >= 144 && ((int) b + 256) <= 191) || (((int) b + 256) == 129)) ||
             (((int) a + 256) == 209) && ((((int) b + 256) >= 128 && ((int) b + 256) <= 143) || (((int) b + 256) == 145));
